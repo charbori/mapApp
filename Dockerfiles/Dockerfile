@@ -24,6 +24,7 @@ RUN npm install -g npm
 
 RUN echo '' | pecl install -o -f redis \
     && docker-php-ext-enable redis.so \
+    && docker-php-ext-install mysqli pdo pdo_mysql \
     && pecl clear-cache;
     
 RUN docker-php-ext-install zip

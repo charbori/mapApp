@@ -46,7 +46,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '172.27.0.4'),
+            'host' => env('DB_HOST', '172.30.1.16'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'sports_record'),
             'username' => env('DB_USERNAME', 'jaehyeok'),
@@ -66,7 +66,7 @@ return [
         'testing' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '172.27.0.4'),
+            'host' => env('DB_HOST', '172.30.1.16'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'testing'),
             'username' => env('DB_USERNAME', 'jaehyeok'),
