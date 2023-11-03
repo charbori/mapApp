@@ -1,0 +1,13 @@
+.idea
+.git
+.gitignore
+.dockerignore
+Dockerfile
+*.md
+*.yml
+composer.lock
+package-lock.json
+*.log
+scripts/
+vendor/
+node_modules/
