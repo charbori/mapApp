@@ -45,6 +45,7 @@ COPY database /var/www/html/database
 COPY artisan /var/www/html/artisan
 COPY routes /var/www/html/routes
 COPY storage /var/www/html/storage
+COPY tests /var/www/html/tests
 COPY public /var/www/html/public
 COPY Dockerfiles/start-container /usr/local/bin/start-container
 COPY Dockerfiles/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

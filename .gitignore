@@ -21,6 +21,5 @@ yarn-error.log
 composer.lock
 package-lock.json
 /lang
-/storage
 /resources/fontawesome-free-6.2.0-web
 cron_exec.log
