@@ -32,6 +32,8 @@ services:
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
         volumes:
             - '.:/var/www/html/'
+            - /var/www/html/vendor
+            - /var/www/html/node_modules
         networks:
             sail:
                 ipv4_address: 172.27.0.3

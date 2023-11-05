@@ -14,7 +14,6 @@ ARG NODE_VERSION=18
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer 
 RUN curl -sS https://getcomposer.org/installer | php  
-RUN mv composer.phar /usr/bin/composer
 
 RUN apt-get install -y openssh-server supervisor
 RUN apt-get install -y zlib1g-dev && apt-get install -y libzip-dev \
