@@ -22,4 +22,5 @@ composer.lock
 package-lock.json
 /lang
 /resources/fontawesome-free-6.2.0-web
+/docker_dev
 cron_exec.log
