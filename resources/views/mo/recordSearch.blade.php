@@ -167,7 +167,7 @@
         });
 
         function getRankList(param, type) {
-            queryString = "page=" + param.page;
+            let queryString = "page=" + param.page;
             queryString += "&search_name=" + param.search_name;
             queryString += "&year=" + param.year;
             queryString += "&month_type=" + param.month_type;
@@ -192,10 +192,10 @@
         }
 
         function setRankList(datas, page_id, type) {
-            record_datas = datas.data;
-            record_datas2 = datas.data2;
-            record_count = datas.count;
-            record_count2 = datas.count2;
+            let record_datas = datas.data;
+            let record_datas2 = datas.data2;
+            let record_count = datas.count;
+            let record_count2 = datas.count2;
 
             if (datas.sport_category == 'player') {
                 $('#sport_player').addClass('text-primary').removeClass('text-secondary').attr('data', 'Y');
@@ -299,9 +299,7 @@
                 if (param == 'undefined') {
                     return;
                 }
-
-                marker_data = param;
-                $.each(marker_data, function(idx, value) {
+                $.each(param, function(idx, value) {
                     initMapList(value);
                 });
             })
@@ -320,15 +318,13 @@
                 if (param == 'undefined') {
                     return;
                 }
-
-                marker_data = param;
-                $.each(marker_data, function(idx, value) {
+                $.each(param, function(idx, value) {
                     if (idx == 0) {
-                        make_marker_UI = getUIContentDetailInfo(marker_data[idx], true);
-                        markerSelected.push(getUIMakeMarker(marker_data[idx], make_marker_UI, true));
+                        make_marker_UI = getUIContentDetailInfo(param[idx], true);
+                        markerSelected.push(getUIMakeMarker(param[idx], make_marker_UI, true));
                     } else {
-                        make_marker_UI = getUIContentDetailInfo(marker_data[idx], false);
-                        marker_maked = getUIMakeMarker(marker_data[idx], make_marker_UI, false);
+                        make_marker_UI = getUIContentDetailInfo(param[idx], false);
+                        marker_maked = getUIMakeMarker(param[idx], make_marker_UI, false);
                     }
                     initMapList(value);
                 });
