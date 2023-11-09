@@ -25,7 +25,7 @@ class PrometheusMetrics extends Controller
         $registry = new CollectorRegistry(new InMemory());
         
         $gauge_memory_usage = $registry->registerGauge('memory', 'usage_gauge', 'it sets', ['type']);
-        $gauge_memory_usage->set(memory_get_usage() / 1024 / 1024, ['blue']); // mb단위
+        $gauge_memory_usage->incBy(memory_get_usage() / 1024 / 1024, ['blue']); // mb단위
 
         $gauge_cpu_usage = $registry->registerGauge('cpu', 'usage_gauge', 'it sets', ['type']);
         $gauge_cpu_usage->incBy(sys_getloadavg()[0] * 100, ['blue']); // 0 ~ 100 %
@@ -39,12 +39,12 @@ class PrometheusMetrics extends Controller
         $datas['URI_LOG'] = $redis_client->lrange('URI_LOG', 0, -1);
         $redis_client->del('URI_LOG');
         $http_counter = $registry->registerCounter('http', 'request_statcd', 'it sets', ['url', 'status']);
-        $http_execution_time = $registry->registerCounter('http', 'processing_time_ms', 'it sets', ['url', 'status', 'execution_time']);
+        $http_execution_time = $registry->registerGauge('http', 'processing_time_ms', 'it sets', ['url', 'status']);
         for ($i = 0; $i < count($datas['URI_LOG']); $i++) {
             $http_request_data = unserialize($datas['URI_LOG'][$i]);
             if ($http_request_data['url'] == 'metrics') continue;
             $http_counter->incBy(1, [$http_request_data['url'], $http_request_data['status']]);
-            $http_execution_time->incBy(1, [$http_request_data['url'], $http_request_data['status'], $http_request_data['execution_time']]);
+            $http_execution_time->incBy($http_request_data['execution_time'], [$http_request_data['url'], $http_request_data['status']]);
         }
         Log::debug(print_r($datas, true));
 

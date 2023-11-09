@@ -65,8 +65,9 @@ class MapRegisterController extends Controller
         if ($viewName == "") {
             Log::debug("viewName 미생성 이슈");
         }
+        $my_user_attach = '/build/images/people_icon.png';
 
-        return view($viewName, compact('view_env', 'mapStoreData'));
+        return view($viewName, compact('view_env', 'mapStoreData', 'my_user_attach'));
     }
 
     public function is_register_param_err(Request $request) {

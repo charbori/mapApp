@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Service\SportRecordService;
-use Illuminate\Http\Request;
+use stdClass;
 use Monolog\Logger;
+use Jenssegers\Agent\Agent;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Jenssegers\Agent\Agent;
-use stdClass;
+use App\Http\Service\SportRecordService;
 
 class MapManageController extends Controller
 {
@@ -35,7 +36,6 @@ class MapManageController extends Controller
         $result_rank_list = array('50' => array());
         $user_rank_map_list = (object) $user_rank_map_list;
         $view_map_id = 0;
-
         $my_user_attach = '/build/images/people_icon.png';
         if (Auth::check()) {
             $service_param = array('user' => array());
@@ -56,9 +56,9 @@ class MapManageController extends Controller
                 $my_user_attach = $res_user_attach[0]->path;
                 $my_user_attach = (strpos($my_user_attach, "public") !== false) ?
                                     str_replace("public", "/storage", $my_user_attach) : $my_user_attach;
-                $my_user_attach = $my_user_attach;
             }
         }
+
         return view($view_name, compact('view_env', 'now_month_type', 'user_rank_map_list', 'view_map_id', 'result_rank_list', 'my_user_attach'));
     }
 
