@@ -54,6 +54,6 @@ RUN composer update
 RUN npm install
 RUN npm run build
 
-EXPOSE 8080 8888 9000
+EXPOSE 8080
 
 ENTRYPOINT ["start-container"]
