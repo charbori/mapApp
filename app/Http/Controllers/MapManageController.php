@@ -38,8 +38,7 @@ class MapManageController extends Controller
         $view_map_id = 0;
         $my_user_attach = '/build/images/people_icon.png';
         if (Auth::check()) {
-            $service_param = array('user' => array());
-            $service_param['user'][] = Auth::user();
+            $service_param = array('user' => Auth::user());
             $sport_record_service = new SportRecordService();
             $result_user_rank_map_list = $sport_record_service->getUserMapList($service_param);
 
@@ -117,11 +116,9 @@ class MapManageController extends Controller
         $view_map_id = 0;
 
         if (Auth::check()) {
-            $service_param = array('user' => array());
-            $service_param['user'][] = Auth::user();
+            $service_param = array('user' => Auth::user());
             $sport_record_service = new SportRecordService();
             $result_user_rank_map_list = $sport_record_service->getUserMapList($service_param);
-            Log::debug($service_param);
             if ($result_user_rank_map_list) {
                 foreach ($result_user_rank_map_list AS $val) {
                     $user_rank_map_list[] = $val;

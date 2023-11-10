@@ -35,7 +35,7 @@ class RecordManagerController extends Controller
         $my_user_attach = '/build/images/people_icon.png';
         if (Auth::check()) {
             $service_param = array('user' => array());
-            $service_param['user'][] = Auth::user();
+            $service_param['user'] = Auth::user();
             $sport_record_service = new SportRecordService();
             $result_user_rank_map_list = $sport_record_service->getUserMapList($service_param);
 
@@ -82,9 +82,9 @@ class RecordManagerController extends Controller
         else $diffTime = ">=";
         if (empty($request->page)) $skip = 0;
         else $skip = ($request->page - 1) * 10;
-        if (empty($request->sport_code) || $request->sport_code == 'short_lane') $sport_code = array('50', '100');
-        else if ($request->sport_code == 'middle_lane') $sport_code = array('200', '400');
+        if ($request->sport_code == 'middle_lane') $sport_code = array('200', '400');
         else if ($request->sport_code == 'long_lane') $sport_code = array('800', '1500');
+        else $sport_code = array('50', '100');
 
         $data = array(  'map_id'        => $map_id,
                         'year'          => $year,
@@ -93,18 +93,17 @@ class RecordManagerController extends Controller
                         'sport_code'    => $sport_code,
                         'search_name'   => $request->search_name);
 
+        $user = collect([]);
         if (isset($request->search_name)) {
             $user = \App\Models\User::where('name', $request->search_name)->limit(1)->get();
-            $data['user'] = $user;
         }
         if (isset($request->group_id)) {
             $user = \App\Models\User::where('group_id', $request->group_id)->get();
-            $data['user'] = $user;
         } else if ($request->sport_category == 'team') {
             $user = \App\Models\User::where('group_id', '!=', '0')->get();
-            $data['user'] = $user;
         }
 
+        $data['user'] = $user;
         $sportService = new SportRecordService();
 
         if ($request->sport_category == 'team') {
@@ -117,31 +116,35 @@ class RecordManagerController extends Controller
 
 		$param = array('data' => array(), 'data2' => array(), 'count' => 0, 'count2' => 0, 'sport_category' => $sport_category);
 
-        foreach ($result['res'] AS $val) {
-            if (is_object($val)) {
-                $param['data'][$val->sport_code][] = array(
-                    'id'            => $val->id,
-                    'type'          => 'swim',
-                    'sport_code'    => $val->sport_code,
-                    'record'        => (float) $val->record,
-                    'user_id'       => $val->user->name,
-                    'map_id'        => $val->map_id,
-                    'reg_date'      => $val->created_at,
-                );
+        if (!$result['res']->isEmpty()) {
+            foreach ($result['res'] AS $val) {
+                if (is_object($val)) {
+                    $param['data'][$val->sport_code][] = array(
+                        'id'            => $val->id,
+                        'type'          => 'swim',
+                        'sport_code'    => $val->sport_code,
+                        'record'        => (float) $val->record,
+                        'user_id'       => $val->user->name,
+                        'map_id'        => $val->map_id,
+                        'reg_date'      => $val->created_at,
+                    );
+                }
             }
         }
 
-        foreach ($result['res2'] AS $val2) {
-            if (is_object($val)) {
-                $param['data2'][$val2->sport_code][] = array(
-                    'id'            => $val2->id,
-                    'type'          => 'swim',
-                    'sport_code'    => $val2->sport_code,
-                    'record'        => (float) $val2->record,
-                    'user_id'       => $val2->user->name,
-                    'map_id'        => $val2->map_id,
-                    'reg_date'      => $val2->created_at,
-                );
+        if (!$result['res2']->isEmpty()) {
+            foreach ($result['res2'] AS $val2) {
+                if (is_object($val)) {
+                    $param['data2'][$val2->sport_code][] = array(
+                        'id'            => $val2->id,
+                        'type'          => 'swim',
+                        'sport_code'    => $val2->sport_code,
+                        'record'        => (float) $val2->record,
+                        'user_id'       => $val2->user->name,
+                        'map_id'        => $val2->map_id,
+                        'reg_date'      => $val2->created_at,
+                    );
+                }
             }
         }
 
@@ -155,11 +158,16 @@ class RecordManagerController extends Controller
 
         $sportService = new SportRecordService();
 
-        $user_data = array();
+        $user_data = collect([]);
         if (isset($request->id)) {
-            $user_data[] = \App\Models\User::where('id', $request->id)->limit(1)->get();
+            $user_data_collection = \App\Models\User::where('id', $request->id)->limit(1)->get();
+            if (!$user_data_collection->isEmpty()) {
+                foreach($user_data_collection AS $val) {
+                    $user_data = $val;
+                }
+            }
         } else if (Auth::check()) {
-            $user_data[] = Auth::user();
+            $user_data = Auth::user();
         }
         $data = array(  'user'  => $user_data,
                         'skip'  => '0');
@@ -176,7 +184,6 @@ class RecordManagerController extends Controller
                 }
             }
         }
-        Log::debug($datas);
 
         return $datas;
     }

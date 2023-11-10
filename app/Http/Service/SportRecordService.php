@@ -13,7 +13,7 @@ class SportRecordService
     }
 
     public function getUserRecord($data) {
-        if (isset($data['user'])) {
+        if (!is_null($data['user']) && !$data['user']->isEmpty()) {
             $res = \App\Models\SportsRecord::with('user')->where('user_id', $data['user'][0]->id)
             ->where('sport_code', $data['sport_code'][0])
             ->where('map_id', $data['map_id'])
@@ -58,7 +58,7 @@ class SportRecordService
     }
 
     public function getTeamRecord($data) {
-        if (isset($data['user']) && is_object($data['user'])) {
+        if (!is_null($data['user']) && !$data['user']->isEmpty()) {
             $res = \App\Models\SportsRecord::with('user')->where('user_id', $data['user'][0]->id)
             ->where('sport_code', $data['sport_code'][0])
             ->where('map_id', $data['map_id'])
@@ -78,10 +78,10 @@ class SportRecordService
             ->where('map_id', $data['map_id'])
             ->whereDate('created_at', $data['month_type'], $data['year']."-07-01")->count();
         } else {
-            return array('res'   => array(),
-                        'res2'  => array(),
-                        'res_count' => array(),
-                        'res2_count'=> array());
+            return array('res'   => collect([]),
+                        'res2'  =>  collect([]),
+                        'res_count' =>  collect([]),
+                        'res2_count'=>  collect([]));
         }
 
         return array('res'   => $res,
@@ -91,11 +91,12 @@ class SportRecordService
     }
 
     public function getUserMapList($data) {
+        $res = collect([]);
         if (isset($data['user'])) {
             $find_date = date('Y-m-d H:i:s',  time() - 15000000);
             $res =  DB::table('sports_record')
                     ->join('map_list', 'sports_record.map_id', '=', 'map_list.id')
-                    ->where('sports_record.user_id', $data['user'][0]->id)
+                    ->where('sports_record.user_id', $data['user']->id)
                     ->where('sports_record.created_at', '>', $find_date)
                     ->select('sports_record.map_id', 'map_list.title')
                     ->orderBy('sports_record.map_id', 'desc')->groupBy('sports_record.map_id')->limit(3)->get();

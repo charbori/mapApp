@@ -15,7 +15,7 @@ use Jenssegers\Agent\Agent;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/api/map');
 });
 
 $agent = new Agent();

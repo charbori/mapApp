@@ -50,11 +50,16 @@ class FollowController extends Controller
         }
 
         if ($user_data['id'] > 0) {
-            $service_param = array('user' => array(),
+            $user_data_param = collect([]);
+            if (!$user_data->isEmpty()) {
+                foreach($user_data AS $val) {
+                    $user_data_param = $val;
+                }
+            }
+            $service_param = array('user' => $user_data_param,
                                     'month_type' => $month_type,
                                     'year' => date("Y"),
                                     'skip' => 0);
-            $service_param['user'][] = (object) $user_data;
             $service_param['sport_code'][0] = '50';
             $service_param['sport_code'][1] = '100';
             $sport_record_service = new SportRecordService();

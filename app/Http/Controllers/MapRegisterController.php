@@ -17,6 +17,11 @@ use Jenssegers\Agent\Agent;
 class MapRegisterController extends Controller
 {
     public function view(Request $request) {
+        if (Auth::check() === false) {
+            flash('로그인 후 등록이 가능합니다.');
+            return redirect('api/map?view_type=map');
+        }
+
         $agent = new Agent();
         $view_env = array('agent' => 'pc');
         $viewName = "";
@@ -62,9 +67,6 @@ class MapRegisterController extends Controller
                 break;
         }
 
-        if ($viewName == "") {
-            Log::debug("viewName 미생성 이슈");
-        }
         $my_user_attach = '/build/images/people_icon.png';
 
         return view($viewName, compact('view_env', 'mapStoreData', 'my_user_attach'));
@@ -85,7 +87,7 @@ class MapRegisterController extends Controller
         foreach ($mymap as $key => $val) {
             if (is_object($val)) {
                 $path_val = "";
-                if (isset($mymapattach)) {
+                if (!$mymapattach->isEmpty()) {
                     foreach ($mymapattach AS $val_path) {
                         if ($val_path->map_id == $val->id) {
                             $path_val = $val_path->path;
@@ -130,6 +132,11 @@ class MapRegisterController extends Controller
     }
 
     public function store(Request $request) {
+        if (Auth::check() === false) {
+            flash('로그인 후 등록이 가능합니다.');
+            return redirect('api/map');
+        }
+
         if ($request->type == "map") {
             $mapManager = new BirdManager();
         } else if ($request->type == "swim") {
