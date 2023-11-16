@@ -59,4 +59,9 @@ class User extends Authenticatable
     public function user_attachment() {
         return $this->hasOne(UserAttachment::class);
     }
+    
+    public function users_group() {
+        return $this->hasMany(UsersGroup::class);
+    }
+
 }

@@ -94,22 +94,19 @@ class RecordManagerController extends Controller
                         'search_name'   => $request->search_name);
 
         $user = collect([]);
-        if (isset($request->search_name)) {
-            $user = \App\Models\User::where('name', $request->search_name)->limit(1)->get();
-        }
-        if (isset($request->group_id)) {
-            $user = \App\Models\User::where('group_id', $request->group_id)->get();
-        } else if ($request->sport_category == 'team') {
-            $user = \App\Models\User::where('group_id', '!=', '0')->get();
-        }
+        
 
-        $data['user'] = $user;
         $sportService = new SportRecordService();
 
         if ($request->sport_category == 'team') {
+            $data['user'] = $user;
             $result = $sportService->getTeamRecord($data);
             $sport_category = 'team';
         } else {
+            if (isset($request->search_name)) {
+                $user = \App\Models\User::where('name', $request->search_name)->limit(1)->get();
+            }
+            $data['user'] = $user;
             $result = $sportService->getUserRecord($data);
             $sport_category = 'player';
         }
