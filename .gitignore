@@ -24,3 +24,5 @@ package-lock.json
 /resources/fontawesome-free-6.2.0-web
 /docker_dev
 cron_exec.log
+docker-compose.dev.yml
+Dockerfiles/nginx.dev.conf

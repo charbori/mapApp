@@ -1,0 +1,47 @@
+# For more information: https://laravel.com/docs/sail
+version: '3'
+services:
+    laravel:
+        build:
+            context: .
+            dockerfile: Dockerfiles/Dockerfile
+        image: laravel_app:${TAG:-latest}
+        container_name: laravel_app
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        environment:
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+        volumes:
+            - '.:/var/www/html/'
+            - './Dockerfiles/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf'
+            - /var/www/html/vendor
+            - /var/www/html/node_modules
+            - /var/www/html/public
+            - /var/www/html/storage
+        networks:
+            sail:
+                ipv4_address: 172.27.0.3
+    redis:
+        image: redis:alpine
+        command: redis-server --port 6379
+        container_name: redis_boot
+        hostname: redis_boot
+        labels:
+            - "name=redis"
+            - "mode=standalone"
+        ports:
+            - 6379:6379
+        networks:
+            sail:
+                ipv4_address: 172.27.0.6
+networks:
+    sail:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.27.0.0/16
+    out-network:
+        driver: bridge
