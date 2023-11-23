@@ -9,6 +9,7 @@ use App\Models\MapAttachment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Jenssegers\Agent\Agent;
+use Illuminate\Support\Facades\Storage;
 
 class RecordManagerController extends Controller
 {
@@ -49,10 +50,7 @@ class RecordManagerController extends Controller
                                     ->where("user_id", '=', Auth::user()->id)
                                     ->get();
             if (count($res_user_attach) > 0 && strlen($res_user_attach[0]->path) > 0) {
-                $my_user_attach = $res_user_attach[0]->path;
-                $my_user_attach = (strpos($my_user_attach, "public") !== false) ?
-                                    str_replace("public", "/storage", $my_user_attach) : $my_user_attach;
-                $my_user_attach = $my_user_attach;
+                $my_user_attach = Storage::path($res_user_attach[0]->path);
             }
         }
 
@@ -176,8 +174,7 @@ class RecordManagerController extends Controller
             foreach ($result AS $res) {
                 if (strlen($res->map_id) > 0) {
                     $map_attach = MapAttachment::where("map_id", $res->map_id)->first();
-                    $datas['map_attachment'][] = (strpos($map_attach->path, "public") !== false) ?
-                                        str_replace("public", "/storage", $map_attach->path) : $map_attach->path;
+                    $datas['map_attachment'][] = Storage::path($map_attach->path);
                 }
             }
         }

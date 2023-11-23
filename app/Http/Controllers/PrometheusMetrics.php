@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Redis;
 class PrometheusMetrics extends Controller
 {
     public function registerMetrics(Request $request) {
-        debugbar()->disable();
+        //debugbar()->disable();
         $datas = array( "URI_LOG" => null,
                         "ERR_LOG" => null);
 

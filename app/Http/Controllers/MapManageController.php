@@ -52,9 +52,7 @@ class MapManageController extends Controller
                                     ->where("user_id", '=', Auth::user()->id)
                                     ->get();
             if (count($res_user_attach) > 0 && strlen($res_user_attach[0]->path) > 0) {
-                $my_user_attach = $res_user_attach[0]->path;
-                $my_user_attach = (strpos($my_user_attach, "public") !== false) ?
-                                    str_replace("public", "/storage", $my_user_attach) : $my_user_attach;
+                $my_user_attach = 'http://content1.couhensoft.com/'.$res_user_attach[0]->path;
             }
         }
 
@@ -86,6 +84,8 @@ class MapManageController extends Controller
                     }
                 }
 
+                Log::debug($path_val);
+
                 $marker_data[] = array(
                     'id'            => $val->id,
                     'name'          => $val->title,
@@ -93,7 +93,7 @@ class MapManageController extends Controller
                     'description'   => $val->desc,
                     'user_id'       => $val->user->name,
                     'reg_date'      => $val->created_at,
-                    'path'          => Storage::url($path_val),
+                    'path'          => 'http://content1.couhensoft.com/'.$path_val,
                     'lat'           => $val->latitude,
                     'long'          => $val->longitude,
                     'player_cnt'    => $val->player_count,

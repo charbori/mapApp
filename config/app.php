@@ -197,6 +197,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        App\Providers\MinioStorageServiceProvider::class,
     ],
 
     /*

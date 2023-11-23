@@ -5,6 +5,7 @@ namespace App\Http\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SportRecordService
 {
@@ -169,13 +170,11 @@ class SportRecordService
                 $sport_data->path = '/build/images/people_icon.png';
                 if (count($res_user_attach) > 0 && strlen($res_user_attach[0]->path) > 0) {
                     $path_data = $res_user_attach[0]->path;
-                    $sport_data->path = (strpos($path_data, "public") !== false) ?
-                                        str_replace("public", "/storage", $path_data) : $path_data;
+                    $sport_data->path = Storage::path($res_user_attach[0]->path);
                 }
 
                 if (strlen($sport_data->path) > 0) {
-                    $sport_data->path = (strpos($sport_data->path, "public") !== false) ?
-                                        str_replace("public", "/storage", $sport_data->path) : $sport_data->path;
+                    $sport_data->path = Storage::path($sport_data->path);
                 }
             }
         }

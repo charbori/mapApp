@@ -68,7 +68,8 @@ class SwimManager implements MapManagerInterface
                 $check = in_array($extension,$allowedfileExtension);
 
                 if ($check) {
-                    $filepath = $photo->store('public/photos/', 'local');
+                    $filepath = date("Ymd") . str_random(32);
+                    Storage::disk('minio')->put($filepath, '/');
                     if ($filepath == false) {
                         return false;
                     }

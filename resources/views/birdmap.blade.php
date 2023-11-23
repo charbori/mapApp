@@ -92,7 +92,6 @@
                 htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
             }
             var marker_datas = '';
-            console.log(point);
 
             $.ajax({
                 url: "/api/map/test",
@@ -103,7 +102,6 @@
                 if (marker_datas == 'undefined') {
                     return;
                 }
-                console.log(marker_datas);
                 var infoWindow = new naver.maps.InfoWindow({
                     anchorSkew: true
                 });

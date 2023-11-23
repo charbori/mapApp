@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\Filesystem;
 use Jenssegers\Agent\Agent;
 
 /*
@@ -26,8 +28,9 @@ if ($agent->isMobile()) {
 Route::redirect('/home', '/api/map');
 Route::redirect('/dashboard', '/api/map');
 
-Route::get('/test', function () {
-    return view('test');
+Route::get('/storage', function () {
+    $created = Storage::disk('minio')->allFiles('/');
+    return '';
 });
 Route::get('/api/map', [App\Http\Controllers\MapManageController::class, 'view'])->name('dashboard');
 Route::get('/api/map/test', [App\Http\Controllers\MapManageController::class, 'show']);

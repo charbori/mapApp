@@ -102,7 +102,7 @@ class MapRegisterController extends Controller
                     'description'   => $val->desc,
                     'user_id'       => $val->user->name,
                     'reg_date'      => $val->created_at,
-                    'path'          => Storage::url($path_val),
+                    'path'          => Storage::path($path_val),
                     'lat'           => $val->latitude,
                     'long'          => $val->longitude
                 );

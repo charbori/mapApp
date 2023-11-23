@@ -38,7 +38,10 @@ function setRecentPlace() {
             $('#place_link' + idx).attr('href','/api/record?map_id=' + val.map_id);
         });
         $.each(datas.map_attachment, function(idx, val) {
-            $('#place_img' + idx).html(val);
+            if (typeof val !== 'undefined' && val.length > 0) {
+                $('#place_img' + idx).remove();
+                $('#place_link' + idx).prepend("<img src='http://content1.couhensoft.com/" + val + "'/>");
+            }
         });
     })
     .fail(function(xhr, status, errorThrown) {
