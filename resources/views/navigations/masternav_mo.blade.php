@@ -66,13 +66,13 @@
                             </a>
                         </div>
                         <div class="col-4" style="text-align:center">
-                            <a id="place_link0" href="/api/search">
+                            <a id="place_link1" href="/api/search">
                                 <svg id="place_img1" style="display:inline;" class="bd-placeholder-img rounded" width="36" height="36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#dddddd"/></svg>
                                 <p id="place_name1" style="font-size:8px;">+</p>
                             </a>
                         </div>
                         <div class="col-4" style="text-align:center">
-                            <a id="place_link0" href="/api/search">
+                            <a id="place_link2" href="/api/search">
                                 <svg id="place_img2" style="display:inline;" class="bd-placeholder-img rounded" width="36" height="36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#dddddd"/></svg>
                                 <p id="place_name2" style="font-size:8px;">+</p>
                             </a>
