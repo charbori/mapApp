@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Image\ImageManager;
+use Illuminate\Support\Facades\URL;
 
 class RegisteredUserController extends Controller
 {

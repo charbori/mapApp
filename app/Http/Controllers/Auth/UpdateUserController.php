@@ -48,18 +48,13 @@ class UpdateUserController extends Controller
         $user_model->password = Hash::make($request->password);
         $user_updated = $user_model->save();
 
-        Log::debug($request->name . ' ' . Hash::make($request->password));
-        Log::debug("---------------");
-
         if ($user_updated > 0) {
             $imageManager = new ImageManager();
             $imageManager->delete($user->id);
 
             $photo_data = $request->file('photos');
-            Log::debug($photo_data);
 
             $result = $imageManager->store($photo_data, $user->id);
-            Log::debug($result);
         }
 
         return redirect(RouteServiceProvider::HOME);
