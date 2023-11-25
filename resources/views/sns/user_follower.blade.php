@@ -18,13 +18,6 @@
     }
     </style>
 @stop
-@php
-    $user_name = "";
-    if (Auth::check()) {
-        $user_param = Auth::user();
-        $user_name = $user_param['name'];
-    }
-@endphp
 @section('contents')
 <div class="col" style="height:1em; background-color:whitesmoke"></div>
     <main class="container">
@@ -71,7 +64,7 @@
                         <div class="col" style="padding-left:6px; margin-left:6px; background-color:#e2e8f0; font-weight:bold;">
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <img src="{{ $val->path }}"/>
+                                    <img src="{{ $my_user_attach }}"/>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <div>

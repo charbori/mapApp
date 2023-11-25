@@ -124,18 +124,22 @@ class SportRecordService
         $sport_icons = array();
         foreach ($sport_code_arr AS $sport_code) {
             $sport_record_datas[$sport_type][$sport_code] = DB::table('follow')->select('*')
-                ->join('ranking', 'ranking.user_id', '=', 'follow.id')
+                ->join('ranking', 'ranking.user_id', '=', 'follow.follower')
                 ->join('map_list', 'map_list.id', '=', 'ranking.map_id')
                 ->join('users', 'users.id', '=', 'follow.follower')
                 ->where('ranking.created_at', '>', $created_at_start)
                 ->where('ranking.created_at', '<', $created_at_end)
                 ->where('ranking.record_type', '=', $sport_type)
                 ->where('ranking.sport_code', '=', $sport_code)
-                ->where('follow.id', '=', Auth::id())
+                ->where('follow.user_id', '=', Auth::id())
                 ->orderBy('ranking.created_at','asc')->get();
             if ($sport_type == 'swim') {
                 $sport_record_datas[$sport_type]['icons'] = "/build/images/people_icon.png";
             }
+
+            Log::debug('sport record');
+
+            Log::debug(print_r($sport_record_datas,true));
 
             foreach ($sport_record_datas[$sport_type][$sport_code] AS $sport_data) {
                 $record_time = strtotime($sport_data->created_at);
