@@ -49,7 +49,6 @@ class FollowController extends Controller
             $month_type = "<";
         }
 
-        //Log::debug('exists : ' . $user_data->id . ' / ' . $user_data->path);
         // Repo 2
         if (!$user_data->isEmpty()) {
             $service_param = array('user' =>  $user_data[0],
