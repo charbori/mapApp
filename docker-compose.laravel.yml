@@ -1,5 +1,5 @@
 # For more information: https://laravel.com/docs/sail
-version: '3'
+version: "3"
 services:
     laravel:
         build:
@@ -8,15 +8,15 @@ services:
         image: laravel_app:${TAG:-latest}
         container_name: laravel_app
         extra_hosts:
-            - 'host.docker.internal:host-gateway'
+            - "host.docker.internal:host-gateway"
         ports:
-            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+            - "80:8080"
         environment:
             LARAVEL_SAIL: 1
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_MODE: "${SAIL_XDEBUG_MODE:-off}"
         volumes:
-            - '.:/var/www/html/'
-            - './Dockerfiles/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf'
+            - ".:/var/www/html/"
+            - "./Dockerfiles/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf"
             - /var/www/html/vendor
             - /var/www/html/node_modules
             - /var/www/html/public

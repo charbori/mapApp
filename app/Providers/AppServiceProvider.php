@@ -25,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        URL::forceRootUrl(env('APP_URL', 'https://couhensoft.com'));
         if($this->app->environment('production')) {
             \URL::forceScheme('https');
         }
