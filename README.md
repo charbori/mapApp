@@ -1,6 +1,3 @@
-# Laravel map application
-# MapApp 서비스 요약
-
 ## 📋 프로젝트 개요
 **Laravel 기반 수영 기록 관리 서비스**
 
@@ -23,18 +20,6 @@
 ### 3. 랭킹 시스템 (`RankingController`)
 - **전체 랭킹**: 사용자별 수영 기록 순위
 - **기록별 랭킹**: 종목별, 거리별 세부 랭킹
-- **실시간 데이터**: 외부 랭킹 서버 연동 (http://172.30.1.92:8080/ranking)
-
-### 4. 소셜 네트워킹 기능
-- **팔로우 시스템**: 다른 사용자 팔로우/언팔로우
-- **게시글 작성**: 수영 관련 글 작성 및 공유
-- **댓글 시스템**: 게시글에 대한 댓글 및 답글
-- **알림 기능**: 팔로우, 댓글 등에 대한 실시간 알림
-
-### 5. 사용자 관리
-- **회원가입/로그인**: Laravel Breeze 기반 인증
-- **프로필 관리**: 사용자 정보 및 프로필 사진 업로드
-- **권한 관리**: 일반 사용자 및 관리자 구분
 
 ## 🛠 기술 스택
 
@@ -48,51 +33,10 @@
 ### Frontend
 - **JavaScript**: Alpine.js 3.x + jQuery
 - **CSS Framework**: Bootstrap 5.3 + TailwindCSS 3.3
-- **Build Tool**: Vite 3.x
-- **Icons**: Bootstrap Icons + FontAwesome
 
 ### Infrastructure
 - **Containerization**: Docker + Docker Compose
 - **Web Server**: Nginx
-- **SSL**: Certbot (Let's Encrypt)
-- **Device Support**: 모바일/데스크톱 반응형 지원
-
-## 📊 데이터 모델 구조
-
-### 핵심 엔티티
-1. **Users**: 사용자 정보 (이름, 이메일, 프로필 등)
-2. **MapList**: 수영장 정보 (위치, 이름, 설명, 태그 등)
-3. **SportsRecord**: 수영 기록 (사용자, 수영장, 기록, 종목)
-4. **Articles**: 게시글 (제목, 내용, 첨부파일)
-5. **Groups**: 그룹/팀 관리
-6. **Follow**: 팔로우 관계
-7. **Comments**: 댓글 시스템
-8. **Alarms**: 알림 관리
-
-### 관계형 구조
-- 사용자 ↔ 수영기록 (1:N)
-- 수영장 ↔ 수영기록 (1:N)
-- 사용자 ↔ 게시글 (1:N)
-- 게시글 ↔ 댓글 (1:N)
-- 사용자 ↔ 팔로우 (M:N)
-
-## 🚀 주요 API 엔드포인트
-
-### 지도 관련
-- `GET /map` - 지도 메인 페이지
-- `POST /map/store` - 수영장 정보 등록
-- `GET /api/search` - 수영장 검색
-
-### 기록 관련
-- `GET /record` - 기록 메인 페이지
-- `POST /record/store` - 수영 기록 등록
-- `GET /record/ranking` - 랭킹 조회
-- `GET /record/mypage` - 개인 기록 페이지
-
-### 소셜 기능
-- `POST /api/follow` - 팔로우/언팔로우
-- `POST /articles` - 게시글 작성
-- `POST /reply/store` - 댓글 작성
 
 ## 📈 모니터링 및 성능
 
